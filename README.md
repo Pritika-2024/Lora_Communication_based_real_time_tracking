@@ -16,15 +16,38 @@ The system consists of two nodes:
 
 ---
 
-## Circuit Implementation and PCB Design
-The transmitter circuit integrates STM32 with GPS (UART) and LoRa (SPI). A custom PCB was designed in KiCad for compact integration.
-
+## Circuit Implementation 
 <p align="center">
   <img src="docs/Circuit_Implementation.jpeg" width="350">
 </p>
 
----
+## Technical Details
 
+### Baud Rate
+- GPS: 9600 bps  
+- Serial: 115200 bps  
+
+### Frequency of Operation
+- LoRa: **433 MHz**
+
+### STM32 Programming and Debugging
+- Programming via **ST-Link (SWD interface)**  
+- Pins: SWCLK, SWDIO, GND, VCC  
+- Supports debugging (breakpoints, step execution)
+
+### Communication Interfaces
+- LoRa → Uses SPI communication to talk with STM32  
+- GPS → UART communication to talk with STM32
+---
+## PCB Design
+The transmitter circuit integrates STM32 with GPS (UART) and LoRa (SPI). A custom PCB was designed in KiCad for compact integration.
+
+## Schematic
+<p align="center">
+  <img src="docs/Schematic.png" width="500">
+</p>
+
+---
 ## Components (BOM-Based)
 - **STM32F103RBTx** (Main controller, LQFP-64)  
 - **SX1278 LoRa Module (Ra-01)** (RF communication)  
@@ -57,14 +80,7 @@ Battery → Regulator (3.3V) →
 - LoRa Module  
 - GPS Module  
 
-This ensures all components operate at a stable **3.3V level**, which is critical for STM32 and SX1278.
-
----
-
-## Schematic
-<p align="center">
-  <img src="docs/Schematic.png" width="500">
-</p>
+This ensures all components operate at a stable 3.3V level, which is critical for STM32 and SX1278.
 
 ---
 
@@ -75,27 +91,12 @@ This ensures all components operate at a stable **3.3V level**, which is critica
 
 ---
 
-## Prototype and Output
+## Prototype
 The hardware prototype validates real-time communication between transmitter and receiver.
 
 <p align="center">
   <img src="docs/Prototype.jpeg" width="400">
 </p>
-
-<p align="center">
-  <img src="docs/Output.jpeg" width="400">
-</p>
-
----
-
-## LoRa vs WiFi
-| Feature | LoRa | WiFi |
-|--------|------|------|
-| Range | Long (km-level) | Short (meters) |
-| Power Consumption | Low | High |
-| Data Rate | Low | High |
-
-LoRa is selected for its long-range and low-power characteristics, making it suitable for tracking applications.
 
 ---
 
@@ -108,30 +109,10 @@ LoRa is selected for its long-range and low-power characteristics, making it sui
 
 ---
 
-## Technical Details
-
-### Baud Rate
-- GPS: 9600 bps  
-- Serial: 115200 bps  
-
-### Frequency of Operation
-- LoRa: **433 MHz**
-
-### STM32 Programming and Debugging
-- Programming via **ST-Link (SWD interface)**  
-- Pins: SWCLK, SWDIO, GND, VCC  
-- Supports debugging (breakpoints, step execution)
-
-### Communication Interfaces
-- LoRa → Uses SPI communication to talk with STM32  
-- GPS → UART communication to talk with STM32
-
----
-
 ## Results
-- Reliable long-range transmission of GPS data  
-- Stable communication between STM32 and ESP32  
-- Suitable for real-time tracking applications  
+<p align="center">
+  <img src="docs/Output.jpeg" width="400">
+</p>
 
 ---
 
