@@ -1,4 +1,4 @@
-# LoRa GPS Tracking System (STM32 + ESP32)
+# LoRa GPS Tracking System
 
 ## Introduction
 This project implements a long-range wireless tracking system using LoRa communication. An STM32-based transmitter acquires real-time GPS coordinates and transmits them over LoRa, while an ESP32-based receiver processes and displays the received data. The system is optimized for low-power, long-distance IoT tracking.
@@ -123,8 +123,8 @@ LoRa is selected for its long-range and low-power characteristics, making it sui
 - Supports debugging (breakpoints, step execution)
 
 ### Communication Interfaces
-- LoRa → SPI  
-- GPS → UART  
+- LoRa → Uses SPI communication to talk with STM32  
+- GPS → UART communication to talk with STM32
 
 ---
 
