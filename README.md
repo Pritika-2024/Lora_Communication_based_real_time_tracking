@@ -14,6 +14,8 @@ The system consists of two nodes:
   <img src="docs/Block%20Diagram.jpeg" width="500">
 </p>
 
+---
+
 ## Technical Details
 
 ### Baud Rate
@@ -29,9 +31,32 @@ The system consists of two nodes:
 - Supports debugging (breakpoints, step execution)
 
 ### Communication Interfaces
-- LoRa → Uses SPI communication to talk with STM32  
-- GPS → UART communication to talk with STM32
+- LoRa → Uses SPI communication with STM32  
+- GPS → Uses UART communication with STM32  
+
+### Hardware Connections
+
+**LoRa (SX1278 → STM32)**
+- NSS (CS) → SPI Chip Select  
+- SCK → SPI Clock  
+- MOSI → SPI MOSI  
+- MISO → SPI MISO  
+- DIO0 → External interrupt pin  
+
+**GPS (NEO-6M → STM32)**
+- TX → STM32 RX  
+- RX → STM32 TX  
+- VCC → 3.3V  
+- GND → GND  
+
+**ST-Link (Programming)**
+- SWDIO → STM32 SWDIO  
+- SWCLK → STM32 SWCLK  
+- GND → GND  
+- 3.3V → VCC  
+
 ---
+
 ## PCB Design
 The transmitter circuit integrates STM32 with GPS (UART) and LoRa (SPI). A custom PCB was designed in KiCad for compact integration.
 
@@ -41,6 +66,7 @@ The transmitter circuit integrates STM32 with GPS (UART) and LoRa (SPI). A custo
 </p>
 
 ---
+
 ## Components (BOM-Based)
 - **STM32F103RBTx** (Main controller, LQFP-64)  
 - **SX1278 LoRa Module (Ra-01)** (RF communication)  
@@ -48,36 +74,33 @@ The transmitter circuit integrates STM32 with GPS (UART) and LoRa (SPI). A custo
 - **AP2112K-3.3 Voltage Regulator** (3.3V supply)  
 - **Capacitors**  
   - 100nF (decoupling near ICs)  
-  - 1µF (stability for regulator)  
+  - 1µF (regulator stability)  
   - 10µF (bulk filtering)  
-- **Resistors (10kΩ)** (pull-up/pull-down for stable logic)  
+- **Resistors (10kΩ)** (pull-up/pull-down)  
 - **Connectors**  
-  - Battery input (2-pin header)  
-  - Reset button header  
-  - ST-Link programming header (SWD)  
+  - Battery input (2-pin)  
+  - Reset header  
+  - ST-Link header  
 
 ---
 
 ## Power Supply Design (External Power)
 The system is powered using an external battery connected via a **2-pin header (BatteryConnector1)**.
 
-- The input voltage is regulated using **AP2112K-3.3**, a low-dropout regulator.
-- **Input capacitor (1µF)** stabilizes the incoming supply.
-- **Output capacitor (1µF)** ensures regulator stability.
-- A **10µF bulk capacitor** handles transient load changes.
-- Multiple **100nF capacitors** are placed close to STM32, LoRa, and GPS modules for noise suppression.
+- Regulated using **AP2112K-3.3 (LDO)**  
+- 1µF capacitors at input/output for stability  
+- 10µF bulk capacitor for transient response  
+- 100nF capacitors for local decoupling  
 
 ### Power Flow
 Battery → Regulator (3.3V) →  
-- STM32  
-- LoRa Module  
-- GPS Module  
+STM32, LoRa, GPS  
 
-This ensures all components operate at a stable 3.3V level, which is critical for STM32 and SX1278.
+Ensures stable 3.3V operation for all modules.
 
 ---
 
-## PCB Design
+## PCB Layout
 <p align="center">
   <img src="docs/PCB_design.png" width="500">
 </p>
@@ -109,7 +132,32 @@ The hardware prototype validates real-time communication between transmitter and
 
 ---
 
+## Source Code
+
+| File | Description |
+|------|------------|
+| [`src/transmitter.cpp`](./src/transmitter.cpp) | STM32 code for GPS data acquisition and LoRa transmission |
+| [`src/receiver.cpp`](./src/receiver.cpp) | ESP32 code for LoRa reception and data decoding |
+
+---
+
+## Libraries Used
+
+- **LoRa.h**  
+  Used for interfacing with SX1278 module using SPI and handling packet transmission/reception.
+
+- **TinyGPS++**  
+  Parses raw NMEA data from GPS module into usable latitude and longitude values.
+
+- **SPI.h**  
+  Enables SPI communication between STM32/ESP32 and LoRa module.
+
+- **SoftwareSerial (if used)**  
+  Provides UART interface when hardware UART is limited (mainly for GPS).
+
+---
+
 ## Tools Used
 - KiCad (PCB design)  
-- Arduino IDE (firmware)  
-- Embedded C (development)
+- Arduino IDE (firmware development)  
+- Embedded C (programming)
