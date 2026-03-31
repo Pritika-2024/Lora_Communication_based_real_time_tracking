@@ -14,13 +14,6 @@ The system consists of two nodes:
   <img src="docs/Block%20Diagram.jpeg" width="500">
 </p>
 
----
-
-## Circuit Implementation 
-<p align="center">
-  <img src="docs/Circuit_Implementation.jpeg" width="350">
-</p>
-
 ## Technical Details
 
 ### Baud Rate
