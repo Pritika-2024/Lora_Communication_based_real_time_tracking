@@ -1,0 +1,11 @@
+Reference,Qty,Value,Footprint
+"A1,B1,C1,Cp1,Cp2,D1,E1",7,100nF,Capacitor_SMD:C_0603_1608Metric
+"BatteryConnector1,RstBt1",2,,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical
+BulkC1,1,10uF,Capacitor_SMD:C_0805_2012Metric
+GPS1,1,NEO-6M,Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical
+"InC1,OutC1",2,1uF,Capacitor_SMD:C_0603_1608Metric
+Lora1,1,Sx1278,RF_Module:Ai-Thinker-Ra-01-LoRa
+"PullDR1,PullDR2",2,10K,Resistor_SMD:R_0603_1608Metric
+Regulator1,1,AP2112K-3.3,Package_TO_SOT_SMD:SOT-23-5
+STLink1,1,-,Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical
+STM32,1,STM32F103RBTx,Package_QFP:LQFP-64_10x10mm_P0.5mm
